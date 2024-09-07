@@ -21,8 +21,8 @@ func initEnvironment() handler.Environment {
 }
 
 func registerRouter() {
-	http.HandleFunc("/ping", handler.PingHandler)
-	http.HandleFunc("/pokemon", handler.GetPokemons)
+	http.HandleFunc("/api/ping", handler.PingHandler)
+	http.HandleFunc("/api/pokemon", handler.GetPokemons)
 }
 
 func serve(environment *handler.Environment) {

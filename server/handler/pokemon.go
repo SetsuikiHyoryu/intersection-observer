@@ -20,12 +20,13 @@ type Pokemon struct {
 func GetPokemons(response http.ResponseWriter, request *http.Request) {
 	queryParams := request.URL.Query()
 	page := queryParams.Get("page")
-	offset, err := strconv.Atoi(page)
+	pageNumber, err := strconv.Atoi(page)
 	if err != nil {
 		http.Error(response, "转换页数失败：%v", http.StatusBadRequest)
 		return
 	}
 
+	offset := pageNumber * 20
 	pokemonUrl := fmt.Sprintf("https://pokeapi.co/api/v2/pokemon?offset=%d&limit=20", offset)
 	result, err := http.Get(pokemonUrl)
 	if err != nil {
