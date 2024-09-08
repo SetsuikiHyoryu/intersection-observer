@@ -6,12 +6,13 @@ import (
 	"net/http"
 
 	"github.com/SetsuikiHyoryu/intersection-observer/server/handler"
+	"github.com/SetsuikiHyoryu/intersection-observer/server/middleware"
 )
 
 func main() {
 	environment := initEnvironment()
-	registerRouter()
-	serve(&environment)
+	router := registerRouter()
+	serve(&environment, router)
 }
 
 func initEnvironment() handler.Environment {
@@ -20,13 +21,19 @@ func initEnvironment() handler.Environment {
 	return environment
 }
 
-func registerRouter() {
-	http.HandleFunc("/api/ping", handler.PingHandler)
-	http.HandleFunc("/api/pokemon", handler.GetPokemons)
+func registerRouter() *http.ServeMux {
+	router := http.NewServeMux()
+	router.HandleFunc("/api/ping", handler.PingHandler)
+	router.HandleFunc("/api/pokemon", handler.GetPokemons)
+	return router
 }
 
-func serve(environment *handler.Environment) {
+func serve(environment *handler.Environment, router *http.ServeMux) {
+	middlewareHandler := middleware.CorsMiddleware(router)
+
 	message := fmt.Sprintf("Server is listening on http://localhost/%s", environment.Port)
 	fmt.Println(message)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", environment.Port), nil))
+
+	port := fmt.Sprintf(":%s", environment.Port)
+	log.Fatal(http.ListenAndServe(port, middlewareHandler))
 }
