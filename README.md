@@ -8,13 +8,13 @@
 cd server
 ```
 
-### 下载后端依赖
+### 下载服务端依赖
 
 ```sh
 go mod tidy
 ```
 
-### 运行后端服务器
+### 运行服务端服务器
 
 ```sh
 go run .
@@ -40,7 +40,7 @@ pnpm install
 pnpm dev
 ```
 
-## 关于交差观察器（Intersection Observer）
+## 关于交叉观察器（Intersection Observer）
 
 ### 提问 AI
 

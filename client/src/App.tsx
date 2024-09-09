@@ -6,12 +6,12 @@ const App: Component = () => {
   const [page, setPage] = createSignal<number>(0)
 
   createEffect(() => {
-    // 交差观察器（Intersection Observer）文档
+    // 交叉观察器（Intersection Observer）文档
     // <https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API>
 
-    // 创建交差观察器
+    // 创建交叉观察器
     const intersectionObserver = new IntersectionObserver(
-      // 交差时的回调函数
+      // 交叉时的回调函数
       async (entires) => {
         if (!entires[0].isIntersecting) {
           return
@@ -22,11 +22,11 @@ const App: Component = () => {
         setPage((previous) => previous + 1)
       },
 
-      // 交差观察器的配置
+      // 交叉观察器的配置
       { threshold: 1 },
     )
 
-    // 观察被交差对象
+    // 观察被交叉对象
     intersectionObserver.observe(document.querySelector('.loading')!)
   })
 
